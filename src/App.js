@@ -1,4 +1,4 @@
-import { Routes, Route, Router } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Admins from "./components/Dashboard/Admins";
 import Dashboard from "./components/Dashboard/Dashboard";
 import Students from "./components/Dashboard/Students";

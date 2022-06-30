@@ -14,12 +14,12 @@ const routes = [
     },
     {
         path: "adminDashboard",
-        name: "Admin Dashboard",
+        name: "Admin",
         icon: <MdAdminPanelSettings size="1.5em" />
     },
     {
         path: "studentDashboard",
-        name: "Student Dashboard",
+        name: "Student",
         icon: <RiShieldUserFill size="1.5em" />
     },
 ]

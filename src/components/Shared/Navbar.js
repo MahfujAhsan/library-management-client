@@ -31,7 +31,7 @@ const Navbar = ({ children }) => {
     const hover = () => setIsShown(!isShown);
     return (
         <div className='flex'>
-            <motion.div animate={{ width: isOpen || isShown ? "250px" : "60px" }} className='bg-sky-700 text-white h-screen' onMouseEnter={hover} onMouseLeave={hover}>
+            <motion.div animate={{ width: isOpen || isShown ? "250px" : "60px" }} className='bg-sky-700 text-white h-screen sticky top-0' onMouseEnter={hover} onMouseLeave={hover}>
                 <div className='flex items-center justify-between py-3 px-2'>
                     {isOpen && <h1 className='font-bold uppercase text-sm'>Library Management</h1>}
                     <div className='cursor-pointer'>

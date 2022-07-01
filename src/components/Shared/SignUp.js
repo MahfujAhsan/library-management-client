@@ -8,8 +8,9 @@ const SignUp = () => {
         console.log(data)
     };
     return (
-        <div>
-            <form className='w-10/12 lg:w-2/4 mx-auto' onSubmit={handleSubmit(onSubmit)}>
+        <div className='my-8'>
+            <h2 className='text-center text-2xl lg:text-4xl uppercase tracking-wider mb-4 lg:mb-8 font-semibold text-accent'>Please Register</h2>
+            <form className='w-3/4 lg:w-2/4 mx-auto' onSubmit={handleSubmit(onSubmit)}>
                 <div class="form-control mx-auto max-w-xs lg:max-w-lg">
                     <label class="label font-bold">
                         <span class="label-text text-xl">Name :</span>

@@ -8,13 +8,13 @@ const SignUp = () => {
         console.log(data)
     };
     return (
-        <div className='max-w-screen-lg flex justify-center ml-96'>
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <div class="form-control">
+        <div>
+            <form className='w-10/12 lg:w-2/4 mx-auto' onSubmit={handleSubmit(onSubmit)}>
+                <div class="form-control mx-auto max-w-xs lg:max-w-lg">
                     <label class="label font-bold">
                         <span class="label-text text-xl">Name :</span>
                     </label>
-                    <input type="text" placeholder="Type Your Full Name" class="input input-bordered pr-24" {...register("name",
+                    <input type="text" placeholder="Type Your Full Name" class="input input-bordered w-full max-w-xs lg:max-w-lg" {...register("name",
                         {
                             required: {
                                 value: true,
@@ -26,15 +26,15 @@ const SignUp = () => {
                             }
                         })} />
                     <label class="label">
-                        {errors.name?.type === 'required' && <span class="label-text-alt text-accent text-xl">{errors.name?.message}</span>}
-                        {errors.name?.type === 'minLength' && <span class="label-text-alt text-accent text-xl">{errors.name?.message}</span>}
+                        {errors.name?.type === 'required' && <span class="label-text-alt text-accent">{errors.name?.message}</span>}
+                        {errors.name?.type === 'minLength' && <span class="label-text-alt text-accent">{errors.name?.message}</span>}
                     </label>
                 </div>
-                <div class="form-control">
+                <div class="form-control mx-auto w-full max-w-xs lg:max-w-lg">
                     <label class="label font-bold">
                         <span class="label-text text-xl">Email :</span>
                     </label>
-                    <input type="email" placeholder="Type Your E-Mail" class="input input-bordered pr-24" {...register("email",
+                    <input type="email" placeholder="Type Your E-Mail" class="input input-bordered w-full max-w-xs lg:max-w-lg" {...register("email",
                         {
                             required: {
                                 value: true,
@@ -46,15 +46,15 @@ const SignUp = () => {
                             }
                         })} />
                     <label class="label">
-                        {errors.email?.type === 'required' && <span class="label-text-alt text-accent text-xl">{errors.email?.message}</span>}
-                        {errors.email?.type === 'pattern' && <span class="label-text-alt text-accent text-xl">{errors.email?.message}</span>}
+                        {errors.email?.type === 'required' && <span class="label-text-alt text-accent">{errors.email?.message}</span>}
+                        {errors.email?.type === 'pattern' && <span class="label-text-alt text-accent">{errors.email?.message}</span>}
                     </label>
                 </div>
-                <div class="form-control">
+                <div class="form-control mx-auto w-full max-w-xs lg:max-w-lg">
                     <label class="label font-bold">
                         <span class="label-text text-xl">SecretKeY :</span>
                     </label>
-                    <input type="password" placeholder="Type Your PassWord" class="input input-bordered pr-24" {...register("password",
+                    <input type="password" placeholder="Type Your PassWord" class="input input-bordered w-full max-w-xs lg:max-w-lg" {...register("password",
                         {
                             required: {
                                 value: true,
@@ -65,18 +65,16 @@ const SignUp = () => {
                                 message: "At least 8 Character"
                             }
                         })} />
-                    {/* {passwordType==="password" ? <span onClick={togglePassword} ></span> : <span onClick={togglePassword} className='absolute top-12 right-2 text-2xl cursor-pointer'><ImEyePlus /></span>} */}
-
                     <label class="label">
-                        {errors.password?.type === 'pattern' && <span class="label-text-alt text-accent text-xl">{errors.password?.message}</span>}
-                        {errors.password?.type === 'required' && <span class="label-text-alt text-accent text-xl">{errors.password?.message}</span>}
+                        {errors.password?.type === 'pattern' && <span class="label-text-alt text-accent">{errors.password?.message}</span>}
+                        {errors.password?.type === 'required' && <span class="label-text-alt text-accent">{errors.password?.message}</span>}
                     </label>
                 </div>
-                <div class="form-control">
+                <div class="form-control mx-auto w-full max-w-xs lg:max-w-lg">
                     <label htmlFor='role' class="label font-bold">
                         <span class="label-text text-xl">Role :</span>
                     </label>
-                    <select class="select bg-slate-600 select-bordered text-lg" {...register("role",
+                    <select class="select bg-slate-600 select-bordered text-lg w-full max-w-xs lg:max-w-lg" {...register("role",
                         {
                             required: {
                                 value: true,
@@ -91,7 +89,9 @@ const SignUp = () => {
                         {errors.role?.type === 'required' && <span class="label-text-alt text-accent">{errors.role.message}</span>}
                     </label>
                 </div>
-                <input className='btn btn-secondary' type="submit" value="Submit" />
+                <div className='w-full mx-auto max-w-xs lg:max-w-lg mt-6'>
+                    <input className='btn btn-accent w-6/12 text-lg text-black font-bold' type="submit" value="Submit" />
+                </div>
             </form>
         </div>
     );

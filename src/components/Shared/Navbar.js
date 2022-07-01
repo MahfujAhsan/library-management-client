@@ -60,7 +60,7 @@ const Navbar = ({ children }) => {
                     }
                 </section>
             </motion.div>
-            <main>{children}</main>
+            <main className='flex-grow'>{children}</main>
         </div>
     );
 };

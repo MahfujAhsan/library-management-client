@@ -60,7 +60,7 @@ const Navbar = ({ children }) => {
                     }
                 </section>
             </motion.div>
-            <main className='p-12'>{children}</main>
+            <main>{children}</main>
         </div>
     );
 };

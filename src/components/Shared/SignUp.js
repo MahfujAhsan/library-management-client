@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from "react-hook-form";
+import { ImEyePlus, ImEyeMinus } from 'react-icons/im';
 
 const SignUp = () => {
-
+    const [isShown, setIsSHown] = useState(false);
+    const togglePassword = () => {
+        setIsSHown((isShown) => !isShown);
+    };
     const { register, formState: { errors }, handleSubmit } = useForm();
     const onSubmit = data => {
         console.log(data)
@@ -51,21 +55,24 @@ const SignUp = () => {
                         {errors.email?.type === 'pattern' && <span class="label-text-alt text-accent">{errors.email?.message}</span>}
                     </label>
                 </div>
-                <div class="form-control mx-auto w-full max-w-xs lg:max-w-lg">
+                <div class="form-control mx-auto w-full max-w-xs lg:max-w-lg relative">
                     <label class="label font-bold">
                         <span class="label-text text-xl">SecretKeY :</span>
                     </label>
-                    <input type="password" placeholder="Type Your PassWord" class="input input-bordered w-full max-w-xs lg:max-w-lg" {...register("password",
-                        {
-                            required: {
-                                value: true,
-                                message: "Password Required"
-                            },
-                            pattern: {
-                                value: /(?=.*[!#$%&?^*@~() "])(?=.{8,})/,
-                                message: "At least 8 Character"
-                            }
-                        })} />
+                    <div>
+                        <input type={isShown ? "text" : "password"} placeholder="Type Your PassWord" class="input input-bordered w-full max-w-xs lg:max-w-lg" {...register("password",
+                            {
+                                required: {
+                                    value: true,
+                                    message: "Password Required"
+                                },
+                                pattern: {
+                                    value: /(?=.*[!#$%&?^*@~() "])(?=.{8,})/,
+                                    message: "At least 8 Character"
+                                }
+                            })} />
+                        <button className='absolute right-2 top-14 text-xl lg:text-2xl' onClick={togglePassword}>{isShown ? <ImEyeMinus /> : <ImEyePlus />}</button>
+                    </div>
                     <label class="label">
                         {errors.password?.type === 'pattern' && <span class="label-text-alt text-accent">{errors.password?.message}</span>}
                         {errors.password?.type === 'required' && <span class="label-text-alt text-accent">{errors.password?.message}</span>}

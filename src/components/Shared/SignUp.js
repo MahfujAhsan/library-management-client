@@ -5,6 +5,8 @@ import { useCreateUserWithEmailAndPassword, useUpdateProfile } from 'react-fireb
 import auth from '../../firebase.init';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Loader from '../../Shared/Loader';
+import { toast } from 'react-toastify';
 
 const SignUp = () => {
     const navigate = useNavigate();
@@ -20,22 +22,33 @@ const SignUp = () => {
         error,
     ] = useCreateUserWithEmailAndPassword(auth, { sendEmailVerification: true });
     const [updateProfile, updating, updateError] = useUpdateProfile(auth);
-    const { register, formState: { errors }, handleSubmit } = useForm();
+    const { register, formState: { errors }, handleSubmit, reset } = useForm();
+    if (user) {
+        console.log(user)
+    }
+    if (updating || loading) {
+        return <Loader />
+    }
+    if (error || updateError) {
+        errorMessage = <p className='text-accent block text-center'>{error.message || updateError.message}</p>
+    };
     const onSubmit = async data => {
         await createUserWithEmailAndPassword(data.email, data.password);
         await updateProfile({ displayName: data.name });
         axios.put(`http://localhost:5000/userData/${data.email}`, data)
             .then(function (response) {
-                console.log(response)
+                if(response.data.upsertedCount === 1) {
+                    toast.success('You Have Created an Account.');
+                    
+                }
+                if(response.data.upsertedCount === 0) {
+                    toast.warning('You Have Already Registered')
+                }
+                reset();
+                navigate('/signin')
             })
 
     };
-    if (user) {
-        console.log(user)
-    }
-    if (error || updateError) {
-        errorMessage = <p className='text-accent block text-center'>{error.message || updateError.message}</p>
-    }
     return (
         <div className='my-8'>
             <h2 className='text-center text-2xl lg:text-4xl uppercase tracking-wider mb-4 lg:mb-8 font-semibold text-accent'>Please Register</h2>

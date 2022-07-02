@@ -11,7 +11,8 @@ const Header = () => {
 
             </div>
             <div>
-                <Link className='border px-5 py-2 rounded-md hover:bg-slate-600 hover:text-white shadow-lg' to="/signup">SignUp</Link>
+                <Link className='border border-accent px-5 py-2 rounded-md hover:bg-slate-600 hover:text-white shadow-lg' to="/signup">SignUp</Link>
+                <Link className='border px-5 py-2 rounded-md hover:bg-slate-600 hover:text-white shadow-lg ml-4 font-bold' to="/signin">Login</Link>
             </div>
         </div>
     );

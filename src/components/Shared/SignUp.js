@@ -4,7 +4,7 @@ import { ImEyePlus, ImEyeMinus } from 'react-icons/im';
 import { useCreateUserWithEmailAndPassword, useUpdateProfile } from 'react-firebase-hooks/auth';
 import auth from '../../firebase.init';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Loader from '../../Shared/Loader';
 import { toast } from 'react-toastify';
 
@@ -140,6 +140,7 @@ const SignUp = () => {
                     <input className='btn btn-accent w-6/12 text-lg text-black font-bold' type="submit" value="Submit" />
                 </div>
             </form>
+            <p className='w-3/4 lg:w-2/4 mx-auto text-center mt-6 lg:text-lg'>Already have an Account? <Link className='text-accent font-bold' to="/signin">Please Login</Link></p>
         </div>
     );
 };

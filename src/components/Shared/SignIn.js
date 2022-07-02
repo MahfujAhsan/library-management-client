@@ -59,7 +59,7 @@ const SignIn = () => {
                                     message: "At least 8 Character"
                                 }
                             })} />
-                        <button className='absolute right-2 top-14 text-xl lg:text-2xl' onClick={togglePassword}>{isShown ? <ImEyeMinus /> : <ImEyePlus />}</button>
+                        <button className='absolute right-2 top-14 text-xl lg:text-2xl' onClick={togglePassword}>{isShown ? <ImEyeMinus className='text-black'/> : <ImEyePlus className='text-black' />}</button>
                     </div>
                     <label className="label">
                         {errors.password?.type === 'pattern' && <span className="label-text-alt text-accent">{errors.password?.message}</span>}
@@ -68,7 +68,7 @@ const SignIn = () => {
                 </div>
 
                 <div className='w-full mx-auto max-w-xs lg:max-w-lg mt-6'>
-                    <input className='btn btn-accent w-6/12 text-lg text-black font-bold' type="submit" value="Submit" />
+                    <input className='btn btn-accent w-6/12 text-lg text-black font-bold' type="submit" value="Login" />
                 </div>
             </form>
         </div>

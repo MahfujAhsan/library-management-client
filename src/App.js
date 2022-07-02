@@ -12,8 +12,9 @@ import 'react-toastify/dist/ReactToastify.css';
 function App() {
   return (
     <>
-      <Header />
+      
       <Navbar>
+      <Header />
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="adminDashboard" element={<Admins />} />

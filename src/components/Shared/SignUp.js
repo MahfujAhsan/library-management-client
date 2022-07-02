@@ -1,15 +1,28 @@
 import React, { useState } from 'react';
 import { useForm } from "react-hook-form";
 import { ImEyePlus, ImEyeMinus } from 'react-icons/im';
+import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import auth from '../../firebase.init';
+import axios from 'axios';
 
 const SignUp = () => {
     const [isShown, setIsSHown] = useState(false);
     const togglePassword = () => {
         setIsSHown((isShown) => !isShown);
     };
+    const [
+        createUserWithEmailAndPassword,
+        user,
+        loading,
+        error,
+    ] = useCreateUserWithEmailAndPassword(auth);
     const { register, formState: { errors }, handleSubmit } = useForm();
-    const onSubmit = data => {
-        console.log(data)
+    const onSubmit = async data => {
+        await createUserWithEmailAndPassword(data.email, data.password)
+        axios.post('http://localhost:5000/userData', data)
+            .then(function (response) {
+                console.log(response)
+            })
     };
     return (
         <div className='my-8'>

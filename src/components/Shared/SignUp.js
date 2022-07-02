@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import { useForm } from "react-hook-form";
 import { ImEyePlus, ImEyeMinus } from 'react-icons/im';
-import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import { useCreateUserWithEmailAndPassword, useUpdateProfile } from 'react-firebase-hooks/auth';
 import auth from '../../firebase.init';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const SignUp = () => {
+    const navigate = useNavigate();
+    let errorMessage;
     const [isShown, setIsSHown] = useState(false);
     const togglePassword = () => {
         setIsSHown((isShown) => !isShown);
@@ -15,24 +18,33 @@ const SignUp = () => {
         user,
         loading,
         error,
-    ] = useCreateUserWithEmailAndPassword(auth);
+    ] = useCreateUserWithEmailAndPassword(auth, { sendEmailVerification: true });
+    const [updateProfile, updating, updateError] = useUpdateProfile(auth);
     const { register, formState: { errors }, handleSubmit } = useForm();
     const onSubmit = async data => {
-        await createUserWithEmailAndPassword(data.email, data.password)
-        axios.post('http://localhost:5000/userData', data)
+        await createUserWithEmailAndPassword(data.email, data.password);
+        await updateProfile({ displayName: data.name });
+        axios.put(`http://localhost:5000/userData/${data.email}`, data)
             .then(function (response) {
                 console.log(response)
             })
+
     };
+    if (user) {
+        console.log(user)
+    }
+    if (error || updateError) {
+        errorMessage = <p className='text-accent block text-center'>{error.message || updateError.message}</p>
+    }
     return (
         <div className='my-8'>
             <h2 className='text-center text-2xl lg:text-4xl uppercase tracking-wider mb-4 lg:mb-8 font-semibold text-accent'>Please Register</h2>
             <form className='w-3/4 lg:w-2/4 mx-auto' onSubmit={handleSubmit(onSubmit)}>
-                <div class="form-control mx-auto max-w-xs lg:max-w-lg">
-                    <label class="label font-bold">
-                        <span class="label-text text-xl">Name :</span>
+                <div className="form-control mx-auto max-w-xs lg:max-w-lg">
+                    <label className="label font-bold">
+                        <span className="label-text text-xl">Name :</span>
                     </label>
-                    <input type="text" placeholder="Type Your Full Name" class="input input-bordered w-full max-w-xs lg:max-w-lg" {...register("name",
+                    <input type="text" placeholder="Type Your Full Name" className="input input-bordered w-full max-w-xs lg:max-w-lg" {...register("name",
                         {
                             required: {
                                 value: true,
@@ -43,16 +55,16 @@ const SignUp = () => {
                                 message: "Min 6 Character"
                             }
                         })} />
-                    <label class="label">
-                        {errors.name?.type === 'required' && <span class="label-text-alt text-accent">{errors.name?.message}</span>}
-                        {errors.name?.type === 'minLength' && <span class="label-text-alt text-accent">{errors.name?.message}</span>}
+                    <label className="label">
+                        {errors.name?.type === 'required' && <span className="label-text-alt text-accent">{errors.name?.message}</span>}
+                        {errors.name?.type === 'minLength' && <span className="label-text-alt text-accent">{errors.name?.message}</span>}
                     </label>
                 </div>
-                <div class="form-control mx-auto w-full max-w-xs lg:max-w-lg">
-                    <label class="label font-bold">
-                        <span class="label-text text-xl">Email :</span>
+                <div className="form-control mx-auto w-full max-w-xs lg:max-w-lg">
+                    <label className="label font-bold">
+                        <span className="label-text text-xl">Email :</span>
                     </label>
-                    <input type="email" placeholder="Type Your E-Mail" class="input input-bordered w-full max-w-xs lg:max-w-lg" {...register("email",
+                    <input type="email" placeholder="Type Your E-Mail" className="input input-bordered w-full max-w-xs lg:max-w-lg" {...register("email",
                         {
                             required: {
                                 value: true,
@@ -63,17 +75,17 @@ const SignUp = () => {
                                 message: 'Provide a valid Email'
                             }
                         })} />
-                    <label class="label">
-                        {errors.email?.type === 'required' && <span class="label-text-alt text-accent">{errors.email?.message}</span>}
-                        {errors.email?.type === 'pattern' && <span class="label-text-alt text-accent">{errors.email?.message}</span>}
+                    <label className="label">
+                        {errors.email?.type === 'required' && <span className="label-text-alt text-accent">{errors.email?.message}</span>}
+                        {errors.email?.type === 'pattern' && <span className="label-text-alt text-accent">{errors.email?.message}</span>}
                     </label>
                 </div>
-                <div class="form-control mx-auto w-full max-w-xs lg:max-w-lg relative">
-                    <label class="label font-bold">
-                        <span class="label-text text-xl">SecretKeY :</span>
+                <div className="form-control mx-auto w-full max-w-xs lg:max-w-lg relative">
+                    <label className="label font-bold">
+                        <span className="label-text text-xl">SecretKeY :</span>
                     </label>
                     <div>
-                        <input type={isShown ? "text" : "password"} placeholder="Type Your PassWord" class="input input-bordered w-full max-w-xs lg:max-w-lg" {...register("password",
+                        <input type={isShown ? "text" : "password"} placeholder="Type Your PassWord" className="input input-bordered w-full max-w-xs lg:max-w-lg" {...register("password",
                             {
                                 required: {
                                     value: true,
@@ -86,16 +98,16 @@ const SignUp = () => {
                             })} />
                         <button className='absolute right-2 top-14 text-xl lg:text-2xl' onClick={togglePassword}>{isShown ? <ImEyeMinus /> : <ImEyePlus />}</button>
                     </div>
-                    <label class="label">
-                        {errors.password?.type === 'pattern' && <span class="label-text-alt text-accent">{errors.password?.message}</span>}
-                        {errors.password?.type === 'required' && <span class="label-text-alt text-accent">{errors.password?.message}</span>}
+                    <label className="label">
+                        {errors.password?.type === 'pattern' && <span className="label-text-alt text-accent">{errors.password?.message}</span>}
+                        {errors.password?.type === 'required' && <span className="label-text-alt text-accent">{errors.password?.message}</span>}
                     </label>
                 </div>
-                <div class="form-control mx-auto w-full max-w-xs lg:max-w-lg">
-                    <label htmlFor='role' class="label font-bold">
-                        <span class="label-text text-xl">Role :</span>
+                <div className="form-control mx-auto w-full max-w-xs lg:max-w-lg">
+                    <label htmlFor='role' className="label font-bold">
+                        <span className="label-text text-xl">Role :</span>
                     </label>
-                    <select class="select bg-slate-600 select-bordered text-lg w-full max-w-xs lg:max-w-lg" {...register("role",
+                    <select className="select bg-slate-600 select-bordered text-lg w-full max-w-xs lg:max-w-lg" {...register("role",
                         {
                             required: {
                                 value: true,
@@ -106,10 +118,11 @@ const SignUp = () => {
                         <option className="bg-accent text-black text-xl" value="student">Student</option>
                         <option className='bg-accent text-black text-xl' value="teacher">Teacher</option>
                     </select>
-                    <label class="label">
-                        {errors.role?.type === 'required' && <span class="label-text-alt text-accent">{errors.role.message}</span>}
+                    <label className="label">
+                        {errors.role?.type === 'required' && <span className="label-text-alt text-accent">{errors.role.message}</span>}
                     </label>
                 </div>
+                {errorMessage}
                 <div className='w-full mx-auto max-w-xs lg:max-w-lg mt-6'>
                     <input className='btn btn-accent w-6/12 text-lg text-black font-bold' type="submit" value="Submit" />
                 </div>

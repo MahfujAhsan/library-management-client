@@ -3,8 +3,12 @@ import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { useForm } from 'react-hook-form';
 import { ImEyePlus, ImEyeMinus } from 'react-icons/im';
 import auth from '../../firebase.init';
+import Loader from '../../Shared/Loader';
+import { Link, useNavigate } from 'react-router-dom';
 
 const SignIn = () => {
+    const navigate = useNavigate();
+    let errorMessage;
     const [isShown, setIsSHown] = useState(false);
     const togglePassword = () => {
         setIsSHown((isShown) => !isShown);
@@ -19,6 +23,15 @@ const SignIn = () => {
     const onSubmit = async data => {
         await signInWithEmailAndPassword(data.email, data.password);
     };
+    if (user) {
+        navigate("/")
+    }
+    if (loading) {
+        <Loader />
+    }
+    if (error) {
+        errorMessage = <p className='text-accent block text-center'>{error.message}</p>
+    }
     return (
         <div>
             <h2 className='text-center text-2xl lg:text-4xl uppercase tracking-wider mb-4 lg:mb-8 font-semibold text-accent'>Please LogIn</h2>
@@ -59,18 +72,19 @@ const SignIn = () => {
                                     message: "At least 8 Character"
                                 }
                             })} />
-                        <button className='absolute right-2 top-14 text-xl lg:text-2xl' onClick={togglePassword}>{isShown ? <ImEyeMinus className='text-black'/> : <ImEyePlus className='text-black' />}</button>
+                        <button className='absolute right-2 top-14 text-xl lg:text-2xl' onClick={togglePassword}>{isShown ? <ImEyeMinus className='text-black' /> : <ImEyePlus className='text-black' />}</button>
                     </div>
                     <label className="label">
                         {errors.password?.type === 'pattern' && <span className="label-text-alt text-accent">{errors.password?.message}</span>}
                         {errors.password?.type === 'required' && <span className="label-text-alt text-accent">{errors.password?.message}</span>}
                     </label>
                 </div>
-
+                {errorMessage}
                 <div className='w-full mx-auto max-w-xs lg:max-w-lg mt-6'>
                     <input className='btn btn-accent w-6/12 text-lg text-black font-bold' type="submit" value="Login" />
                 </div>
             </form>
+            <p className='w-3/4 lg:w-2/4 mx-auto text-center mt-6 lg:text-lg'>Already have an Account? <Link className='text-accent font-bold' to="/signup">Please Login</Link></p>
         </div>
     );
 };

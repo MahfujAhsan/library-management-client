@@ -5,7 +5,7 @@ import { useCreateUserWithEmailAndPassword, useUpdateProfile } from 'react-fireb
 import auth from '../../firebase.init';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
-import Loader from '../../Shared/Loader';
+import Loader from './Loader';
 import { toast } from 'react-toastify';
 
 const SignUp = () => {

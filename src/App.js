@@ -8,8 +8,12 @@ import SignIn from "./components/Shared/SignIn";
 import SignUp from "./components/Shared/SignUp";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useAuthState } from "react-firebase-hooks/auth";
+import auth from "./firebase.init";
+import Profile from "./components/Profile/Profile";
 
 function App() {
+  const [user] = useAuthState(auth);
   return (
     <>
       
@@ -21,6 +25,7 @@ function App() {
           <Route path="studentDashboard" element={<Students />} />
           <Route path="signup" element={<SignUp />} />
           <Route path="signin" element={<SignIn />} />
+          <Route path={`userData/:${user?.uid}`} element={<Profile />} />
         </Routes>
       </Navbar>
       <ToastContainer />

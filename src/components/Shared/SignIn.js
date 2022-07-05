@@ -3,7 +3,7 @@ import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { useForm } from 'react-hook-form';
 import { ImEyePlus, ImEyeMinus } from 'react-icons/im';
 import auth from '../../firebase.init';
-import Loader from '../../Shared/Loader';
+import Loader from './Loader';
 import { Link, useNavigate } from 'react-router-dom';
 
 const SignIn = () => {
@@ -22,6 +22,7 @@ const SignIn = () => {
     const { register, formState: { errors }, handleSubmit, reset } = useForm();
     const onSubmit = async data => {
         await signInWithEmailAndPassword(data.email, data.password);
+        reset();
     };
     if (user) {
         navigate("/")

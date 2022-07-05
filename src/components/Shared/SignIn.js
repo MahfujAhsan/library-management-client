@@ -85,7 +85,7 @@ const SignIn = () => {
                     <input className='btn btn-accent w-6/12 text-lg text-black font-bold' type="submit" value="Login" />
                 </div>
             </form>
-            <p className='w-3/4 lg:w-2/4 mx-auto text-center mt-6 lg:text-lg'>Already have an Account? <Link className='text-accent font-bold' to="/signup">Please Login</Link></p>
+            <p className='w-3/4 lg:w-2/4 mx-auto text-center mt-6 lg:text-lg'>New to Library Management? <Link className='text-accent font-bold' to="/signup">Register Now</Link></p>
         </div>
     );
 };
